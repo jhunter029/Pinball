@@ -1814,7 +1814,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotAmount: 90
-  speed: 5
 --- !u!4 &1586004715 stripped
 Transform:
   m_PrefabParentObject: {fileID: 462476, guid: 3c56b843246341843a3e1dd95242c6c0, type: 2}
