@@ -42,4 +42,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.log
-Temp/
+Temp/*
+Temp/bin
+Temp/bin/Debug
+Temp/bin/Debug/*
+Temp/bin/Debug/
+
