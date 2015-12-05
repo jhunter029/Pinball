@@ -45,7 +45,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Bumper10.cs" />
+     <Compile Include="Assets\Bumper20.cs" />
      <Compile Include="Assets\Lives.cs" />
+     <Compile Include="Assets\Obstacle50.cs" />
      <Compile Include="Assets\PinballScript.cs" />
      <Compile Include="Assets\Score.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
