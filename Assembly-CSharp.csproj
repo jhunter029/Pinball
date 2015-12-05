@@ -118,6 +118,7 @@
      <None Include="Assets\_CompletedAssets\SampleAssets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
      <None Include="Assets\MyAssets\Subway Set\README.txt" />
      <None Include="Assets\CUSTOM\LASciFiPanel\_ChangeLog.txt" />
+     <None Include="Assets\Sci-Fi Music Pack\License.txt" />
      <None Include="Assets\_CompletedAssets\SampleAssets\Effects\ImageEffects\Shaders\VignettingShader.shader" />
      <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
