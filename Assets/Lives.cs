@@ -2,16 +2,18 @@
 using System.Collections;
 
 public class Lives : MonoBehaviour {
-	public GUIText lifeText;
+	public TextMesh lifeText;
 	private static int lives = 3;
 	
-	public void Update ()
-	{
+	public void Update () {
 		lifeText.text = "Lives Remaining: " + lives;
 	}
 	
-	public static void loseLife ()
-	{
+	public static void loseLife () {
 		lives--;
+	}
+
+	public static int getLives() {
+		return lives;
 	}
 }
