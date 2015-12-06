@@ -42,9 +42,26 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.log
-Temp/*
-Temp/bin
-Temp/bin/Debug
-Temp/bin/Debug/*
-Temp/bin/Debug/
 
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Obj/
+UnityGenerated/
+Library/
+Assets/AssetStoreTools*
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj

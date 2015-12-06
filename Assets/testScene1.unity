@@ -1071,6 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2532600cf43cf478a513ccb92d1cd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plungerSfx: {fileID: 0}
   thrust: 1200
 --- !u!1 &893174879
 GameObject:

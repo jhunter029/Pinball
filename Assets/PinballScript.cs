@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class PinballScript : MonoBehaviour {
+	public AudioClip plungerSfx;
+	
+	
+	private AudioSource source;
 	private Rigidbody rb; // game object's rigidbody reference
 	public int thrust; // amount of force for plunger
 	private  Vector3 startPos; // the starting position
