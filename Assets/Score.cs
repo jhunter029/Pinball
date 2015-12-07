@@ -14,6 +14,10 @@ public class Score : MonoBehaviour {
 	{
 		score += increment;
 	}
+
+	public static void resetScore() {
+		score = 0;
+	}
 	
 	
 }
