@@ -8,6 +8,12 @@ public class Bumper10 : MonoBehaviour {
 		if(col.gameObject.tag == "Ball")
 		{
 			Score.addScore(10);
+			col.rigidbody.AddForce( getRandomForce() * 300);
 		}
+	}
+
+	private Vector3 getRandomForce() {
+		Vector3[] dir = {Vector3.up, Vector3.down, Vector3.right, Vector3.left, Vector3.forward, Vector3.back};
+		return dir [(int)Random.Range (0, 5)];
 	}
 }
