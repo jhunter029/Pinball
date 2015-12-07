@@ -1150,7 +1150,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 300c1e817dc20434f930b229bf6ef3e8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .750999987
+  m_Volume: .595000029
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1474,7 +1474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plunge: {fileID: 8300000, guid: e59fc7374dc374d6db7f805e43cc5c06, type: 3}
-  dead: {fileID: 8300000, guid: 7aa83da633e054c9e95da044f8f96733, type: 3}
+  dead: {fileID: 8300000, guid: e59fc7374dc374d6db7f805e43cc5c06, type: 3}
 --- !u!82 &856814980
 AudioSource:
   m_ObjectHideFlags: 0
