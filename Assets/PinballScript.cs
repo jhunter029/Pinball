@@ -3,7 +3,8 @@ using System.Collections;
 
 public class PinballScript : MonoBehaviour {
     // Sound Effect Variables
-	public AudioClip plungerSfx;
+	public AudioClip plunge;
+	public AudioClip dead;
 	private AudioSource source;
     
     // Physics Variables
@@ -11,6 +12,11 @@ public class PinballScript : MonoBehaviour {
 	private int maxThrust = 900/4; // max thrust ball can receive without going haywire
 	private static Vector3 startPos; // the starting position
 	private int max = 1; // max value of that plunger set
+
+	void Awake () {
+		source = GetComponent<AudioSource>();
+	}
+
 	// Use this for initialization
 	void Start () {
         // Get the starting transform in the plunger area
@@ -32,6 +38,8 @@ public class PinballScript : MonoBehaviour {
 				} else {
 					// Apply upward force on the ball
 					rb.AddForce (transform.up * (maxThrust * max + 500));
+					// Play Sound Effecy 
+					source.PlayOneShot(plunge, 1.0F);
 					max = 1;
 				}
 
@@ -39,7 +47,9 @@ public class PinballScript : MonoBehaviour {
 				// If the ball is dead, deduct from total lives
 				Lives.loseLife ();
 				// If total lives is >= 0, continue game; else, end
-				if (Lives.getLives () >= 0) {	
+				if (Lives.getLives () >= 0) {
+					// Play Sound Effect 
+					source.PlayOneShot(dead, 1.0F);
 					// Reset the velocities
 					rb.velocity = new Vector3 (0, 0, 0);
 					rb.angularVelocity = new Vector3 (0, 0, 0);

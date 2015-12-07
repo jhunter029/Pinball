@@ -5,7 +5,19 @@ public class Lives : MonoBehaviour {
 	public TextMesh lifeText;
 	private static int lives = 3;
 	public static bool gameOver = false; // If the lives < 0 (wait for coin)
-	
+	// Sound Effect Variables
+	public static AudioClip end;
+	public AudioClip endSet;
+	public static AudioClip restart;
+	public AudioClip restartSet;
+	private static AudioSource source;
+
+	void Awake () {
+		source = GetComponent<AudioSource>();
+		end = endSet;
+		restart = restartSet;
+	}
+
 	public void Update () {
 		if (!gameOver) {
 			lifeText.text = "Lives Remaining: " + lives;
@@ -21,6 +33,7 @@ public class Lives : MonoBehaviour {
 		lives--;
 		if (lives < 0) {
 			gameOver = true;
+			source.PlayOneShot(end, 1.0f);
 		}
 	}
 
@@ -32,6 +45,8 @@ public class Lives : MonoBehaviour {
 		print ("3 lives gained!");
 		// Restart game
 		gameOver = false;
+		// Play sound effect
+		source.PlayOneShot(restart, 1.0f);
 		// Reset Lives
         lives = 3;
 		// Reset the score
@@ -39,5 +54,6 @@ public class Lives : MonoBehaviour {
 		// Reset Ball
 		GameObject ball = GameObject.FindGameObjectWithTag ("Ball");
 		PinballScript.resetBall (ball);
+
     }
 }
