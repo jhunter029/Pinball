@@ -11,7 +11,6 @@ public class Lives : MonoBehaviour {
 		} else {
 			lifeText.text = "Insert coin to continue";
 		}
-
 	}
 	
 	public static void loseLife () {

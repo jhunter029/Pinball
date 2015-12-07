@@ -8,7 +8,7 @@ public class rotateLeftFlipper : MonoBehaviour {
 	private Vector3 startEuler; // Starting Euler angle
 	private Vector3 destEuler = Vector3.zero; // Destination Euler angle
 	public float rotAmount = 60.0f; // Amount to rotate by - dependent on force of flipper
-	private int reset = 15; // Frames to wait before resetting flipper
+	private int reset = 10; // Frames to wait before resetting flipper
 	private Transform pivot; // left pivot point
 	private bool down = true; // flag to see if the flipper is down
 
@@ -27,7 +27,7 @@ public class rotateLeftFlipper : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// For testing purposes, I'm using the Z key instead of a dynamic rotation amount to trigger the flipper
-		if (Input.GetKeyDown (KeyCode.Z) && down) {
+		if (PinballSerial.left && down) {
 			// Rotate the flipper by the desired amount
 			transform.Rotate(Vector3.forward * rotAmount);
 			// Do maths to reposition the flipper
@@ -42,14 +42,16 @@ public class rotateLeftFlipper : MonoBehaviour {
 			// Mark that the flipper is up
 			down = false;
 			// Start the reset counter
-			reset = 15;
+			reset = 10;
+		} else if (!down && PinballSerial.left) {
+			reset = 10;
 		} else if (reset == 0) {
 			//Reset angle and position
 			transform.position = startPos;
 			transform.rotation = startRot;
 			transform.eulerAngles = startEuler;
 			// Reset reset counter
-			reset = 15;
+			reset = 10;
 			// Mark that the flipper has been reset
 			down = true;
 		} else {
