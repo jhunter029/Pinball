@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plungerSfx: {fileID: 0}
-  thrust: 1200
+  thrust: 1400
 --- !u!1 &893174879
 GameObject:
   m_ObjectHideFlags: 0
