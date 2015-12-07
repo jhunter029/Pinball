@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using System.IO.Ports;
-using System;
 public class PinballScript : MonoBehaviour {
     // Sound Effect Variables
 	public AudioClip plungerSfx;

@@ -2,28 +2,35 @@
 using System.Collections;
 
 using System.IO.Ports;
+using System.Threading;
 using System;
 
 public class PinballSerial : MonoBehaviour {
     //Serial Variables
-    private SerialPort sp = new SerialPort("COM5", 9600);
+    private SerialPort sp = new SerialPort("COM3", 9600);
 
     // Update Variables
     bool left = false;
     bool right = false;
-    float speed = 0.0f;
+	bool coin = false;
+    int pot = 0;
 
 	// Use this for initialization
 	void Start () {
         try
         {
             Debug.Log("Opening ports");
-            //serialPort1
+            //serialPort
+			if (sp.IsOpen) {
+				sp.Close();
+				sp = new SerialPort("COM3", 9600);
+			}
             sp.Open();
-            sp.ReadTimeout = 30;
-            //sp.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(serialPort_DataRecieved);
+            sp.ReadTimeout = 50;
 
             Debug.Log("Ports openned");
+			Thread polling = new Thread(runPolling);
+			polling.Start();
         }
         catch (Exception e)
         {
@@ -34,22 +41,19 @@ public class PinballSerial : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (sp != null) {
-            Debug.Log(sp.ReadLine());
+            //Debug.Log(sp.ReadByte());
         } else {
             Debug.Log("Serial is null");
         }
 	}
 
 
-    private void serialPort_DataRecieved(object sender, SerialDataReceivedEventArgs e)
-    {
-        Debug.Log("got something");
-        if (sp.IsOpen)
-        {
+    private void runPolling() {
+		while (sp.IsOpen) {
             try
             {
-                string spIn = sp.ReadLine();
-                Debug.Log("serial port input:" + spIn);
+				int str = sp.ReadByte();
+				print ("Data Received : " + str);
 
             }
             catch (Exception ee)
@@ -58,4 +62,8 @@ public class PinballSerial : MonoBehaviour {
             }
         }
     }
+
+	void OnDestroy() {
+		sp.Close ();
+	}
 }
