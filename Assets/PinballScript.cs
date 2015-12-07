@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using System.IO.Ports;
+using System;
 public class PinballScript : MonoBehaviour {
+    // Sound Effect Variables
 	public AudioClip plungerSfx;
-	
-	
 	private AudioSource source;
+    
+    // Physics Variables
 	private Rigidbody rb; // game object's rigidbody reference
 	public int thrust; // amount of force for plunger
 	private  Vector3 startPos; // the starting position
 	private bool plunger; // Bool to determine whether or not to add plunger force
 	// Use this for initialization
 	void Start () {
-		// Get the starting transform in the plunger area
+        // Get the starting transform in the plunger area
 		startPos = transform.position;
 		// Set the rigidbody reference variable
 		rb = GetComponent<Rigidbody>();
@@ -43,6 +46,8 @@ public class PinballScript : MonoBehaviour {
 			}
 			// Destroy current ball
 			Destroy(gameObject);
-		}
+		}        
 	}
+
 }
+

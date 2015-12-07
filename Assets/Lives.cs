@@ -16,4 +16,8 @@ public class Lives : MonoBehaviour {
 	public static int getLives() {
 		return lives;
 	}
+
+    public static void reset() {
+        lives = 3;
+    }
 }
