@@ -10,10 +10,11 @@ public class PinballSerial : MonoBehaviour {
     private SerialPort sp = new SerialPort("COM3", 9600);
 
     // Update Variables
-    bool left = false;
-    bool right = false;
-	bool coin = false;
-    int pot = 0;
+    public static bool left = false;
+	public static bool right = false;
+	public static bool coin = false;
+	public static int plunger = 1;
+	public static float tilt = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,7 @@ public class PinballSerial : MonoBehaviour {
 				sp = new SerialPort("COM3", 9600);
 			}
             sp.Open();
-            sp.ReadTimeout = 50;
+            sp.ReadTimeout = 110;
 
             Debug.Log("Ports openned");
 			Thread polling = new Thread(runPolling);
@@ -40,24 +41,54 @@ public class PinballSerial : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (sp != null) {
-            //Debug.Log(sp.ReadByte());
-        } else {
-            Debug.Log("Serial is null");
-        }
 	}
 
 
     private void runPolling() {
 		while (sp.IsOpen) {
-            try
-            {
-				int str = sp.ReadByte();
+            try {
+			    string str = sp.ReadLine();
+				string[] values = str.Split (',');
+				// Parse left
+				if (values.Length > 0 || values[0] == "" || values[0].Equals ("0")) {
+					left = false;
+				} else {
+					left = true;
+				}
+				// Parse right
+				if (values.Length > 1 || values[1] == "" || values[1].Equals ("0")) {
+					left = false;
+				} else {
+					left = true;
+				}
+				// Parse coin
+				if (values.Length > 2 || values[2] == "" || values[2].Equals ("0")) {
+					left = false;
+				} else {
+					left = true;
+				}
+				// Parse potentiometer value
+				if (values.Length > 3 || values[3] == "") {
+					plunger = 1;
+				} else {
+					plunger = int.Parse(values[3]);
+				}
+				// Parse potentiometer value
+				if (values.Length > 4 || values[4] == "") {
+					tilt = 0.0f;
+				} else {
+					tilt = float.Parse(values[4]);
+				}
+
+
 				print ("Data Received : " + str);
 
-            }
-            catch (Exception ee)
-            {
+				// Flush the stream
+				sp.BaseStream.Flush();
+
+            } catch (TimeoutException te) {
+
+			} catch (Exception ee) {
                 Debug.Log(ee.ToString());
             }
         }

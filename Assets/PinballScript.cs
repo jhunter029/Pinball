@@ -11,6 +11,7 @@ public class PinballScript : MonoBehaviour {
 	public int thrust; // amount of force for plunger
 	private  Vector3 startPos; // the starting position
 	private bool plunger; // Bool to determine whether or not to add plunger force
+	private bool gameOver = false; // If the ball is out of play (wait for coin)
 	// Use this for initialization
 	void Start () {
         // Get the starting transform in the plunger area
@@ -23,28 +24,35 @@ public class PinballScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Check if the ball is in the plunger area or dead
+		if (!gameOver) {
+			// Check if the ball is in the plunger area or dead
 			if (Input.GetKeyDown (KeyCode.Space) && transform.position.x < 0.1f &&
-			    transform.position.y < 9.1f && plunger) {
-			// Apply upward force on the ball
-			rb.AddForce (transform.up * thrust);
-			plunger = false;
-		} else if (transform.position.y < 3.0f) {
-			// If total lives is = 0, end the game
-			if (Lives.getLives() > 0) {	
+				transform.position.y < 9.1f && plunger) {
+				// Apply upward force on the ball
+				rb.AddForce (transform.up * thrust);
+				plunger = false;
+			} else if (transform.position.y < 3.0f) {
 				// If the ball is dead, deduct from total lives
-				Lives.loseLife();
-				// Reset the velocities
-				rb.velocity = new Vector3(0, 0, 0);
-				rb.angularVelocity = new Vector3(0, 0, 0);
-				// Make new ball at plunger area
-				Instantiate(rb, startPos, Quaternion.identity);
-				// Turn on the plunger
-				plunger = true;
+				Lives.loseLife ();
+				// If total lives is >= 0, continue game; else, end
+				if (Lives.getLives () >= 0) {	
+					// Reset the velocities
+					rb.velocity = new Vector3 (0, 0, 0);
+					rb.angularVelocity = new Vector3 (0, 0, 0);
+					// Make new ball at plunger area
+					Instantiate (rb, startPos, Quaternion.identity);
+					// Turn on the plunger
+					plunger = true;
+				}
+				// Destroy current ball
+				Destroy (gameObject);
+			}  
+		} else {
+			if (PinballSerial.coin) {
+				gameOver = false;
+				Lives.reset();
 			}
-			// Destroy current ball
-			Destroy(gameObject);
-		}        
+		}
 	}
 
 }
