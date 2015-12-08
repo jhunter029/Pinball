@@ -7,7 +7,7 @@ using System;
 
 public class PinballSerial : MonoBehaviour {
     //Serial Variables
-    private SerialPort sp = new SerialPort("COM3", 9600);
+    private SerialPort sp = new SerialPort("COM5", 9600);
 
     // Update Variables
     public static bool left = false;
@@ -24,7 +24,7 @@ public class PinballSerial : MonoBehaviour {
             //serialPort
 			if (sp.IsOpen) {
 				sp.Close();
-				sp = new SerialPort("COM3", 9600);
+				sp = new SerialPort("COM5", 9600);
 			}
             sp.Open();
             sp.ReadTimeout = 10000;

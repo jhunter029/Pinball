@@ -13,6 +13,6 @@ public class TiltCamera : MonoBehaviour {
 	void Update () {
 		transform.rotation = Quaternion.Euler(0, 0, 90 * PinballSerial.tilt);
 		Physics.gravity = new Vector3(0, -9.81f * (1 - Mathf.Abs(PinballSerial.tilt)), -9.81f * PinballSerial.tilt);
-		print (Physics.gravity);
+		//print (Physics.gravity);
 	}
 }
