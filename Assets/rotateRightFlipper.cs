@@ -11,56 +11,61 @@ public class rotateRightFlipper : MonoBehaviour {
 	private int reset = 10; // Frames to wait before resetting flipper
 	private Transform pivot; // right pivot point
 	private bool down = true; // flag to see if the flipper is down
-	
-	// Use this for initialization
-	void Start () {
+    float amountRotatedBy;
+
+    // Use this for initialization
+    void Start () {
 		// Default all values to the starting positions
 		startPos = transform.position;
 		startRot = transform.rotation;
 		startEuler = transform.eulerAngles;
 		currEuler = transform.eulerAngles;
-		
-		// Set reference to the pivot point
-		pivot = transform.Find("Right Pivot Point");
+        amountRotatedBy = 0;
+        // Set reference to the pivot point
+        pivot = transform.Find("Right Pivot Point");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// For testing purposes, I'm using the X key instead of a dynamic rotation amount to trigger the flipper
-		if (PinballSerial.right && down) {
-			// Rotate the flipper by the desired amount
-			transform.Rotate(Vector3.forward * rotAmount);
-			// Do maths to reposition the flipper
-			// It rotates around the center, not the right end
-			float pos = Mathf.Abs(transform.position.x - pivot.position.x);
-			float diffY = Mathf.Abs(transform.position.y - pivot.position.y);
-			transform.position = new Vector3(transform.position.x - pos - Mathf.Abs(pos * Mathf.Cos (rotAmount * 3.1415926f / 180.0f)),
-			                                 transform.position.y + Mathf.Abs(pos * Mathf.Sin (rotAmount * 3.1415926f / 180.0f)),
-			                                 transform.position.z);
-			// The 0.3f is hardcoded in because it just needed to move a little more
-			// And I'm too lazy to redo all of my calculations for something that isn't dynamic
-			transform.Translate(Vector3.left * Mathf.Abs(pos + 0.3f - Mathf.Abs(pos * Mathf.Cos (rotAmount * 3.1415926f / 180.0f))));
-			transform.Translate(Vector3.down * Mathf.Abs(diffY - Mathf.Abs(pos * Mathf.Sin (rotAmount * 3.1415926f / 180.0f))));
-			// Mark that the flipper is up
-			down = false;
-			// Start the reset counter
-			reset = 10;
-		}  else if (!down && PinballSerial.right) {
-			reset = 10;
-		}  else if (reset == 0) {
-			//Reset angle and position
-			transform.position = startPos;
-			transform.rotation = startRot;
-			transform.eulerAngles = startEuler;
-			// Reset reset counter
-			reset = 10;
-			// Mark that the flipper has been reset
-			down = true;
-		} else {
-			// Decrement frame wait
-			reset--;
-		}
-	}
+        // For testing purposes, I'm using the X key instead of a dynamic rotation amount to trigger the flipper
+
+        GameObject leftSphere = GameObject.Find("SphereRight");
+        float rotateAmount = 1000 * Time.deltaTime;
+
+
+        down = amountRotatedBy <= 0;
+        
+
+        if ((Input.GetKey("x") || PinballSerial.left))
+        {
+            // Rotate the flipper by the desired amounts
+            // Do maths to reposition the flipper
+            // It rotates around the center, not the left end
+
+
+            if (amountRotatedBy < 75)
+            {
+                amountRotatedBy += rotateAmount;
+                transform.RotateAround(leftSphere.transform.position, Vector3.back, rotateAmount);
+            }
+            // Mark that the flipper is up
+            down = false;
+            // Start the reset counter
+            reset = 10;
+        }
+        else if (!(Input.GetKey("x") || PinballSerial.left))
+        {
+
+            if (amountRotatedBy > 0)
+            {
+                amountRotatedBy -= rotateAmount;
+                transform.RotateAround(leftSphere.transform.position, Vector3.forward, rotateAmount);
+            } 
+
+           
+        }
+    }
+
 	
 	// Detect Collisions with the Ball
 	void OnCollisionStay (Collision col)
