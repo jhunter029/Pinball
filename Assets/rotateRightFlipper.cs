@@ -29,14 +29,14 @@ public class rotateRightFlipper : MonoBehaviour {
 	void Update () {
         // For testing purposes, I'm using the X key instead of a dynamic rotation amount to trigger the flipper
 
-        GameObject leftSphere = GameObject.Find("SphereLeft");
-        float rotateAmount = 500 * Time.deltaTime;
+        GameObject leftSphere = GameObject.Find("SphereRight");
+        float rotateAmount = 1000 * Time.deltaTime;
 
 
         down = amountRotatedBy <= 0;
         
 
-        if ((Input.GetKey("z") || PinballSerial.left))
+        if ((Input.GetKey("x") || PinballSerial.left))
         {
             // Rotate the flipper by the desired amounts
             // Do maths to reposition the flipper
@@ -46,20 +46,20 @@ public class rotateRightFlipper : MonoBehaviour {
             if (amountRotatedBy < 75)
             {
                 amountRotatedBy += rotateAmount;
-                transform.RotateAround(leftSphere.transform.position, Vector3.forward, rotateAmount);
+                transform.RotateAround(leftSphere.transform.position, Vector3.back, rotateAmount);
             }
             // Mark that the flipper is up
             down = false;
             // Start the reset counter
             reset = 10;
         }
-        else if (!(Input.GetKey("z") || PinballSerial.left))
+        else if (!(Input.GetKey("x") || PinballSerial.left))
         {
 
             if (amountRotatedBy > 0)
             {
                 amountRotatedBy -= rotateAmount;
-                transform.RotateAround(leftSphere.transform.position, Vector3.back, rotateAmount);
+                transform.RotateAround(leftSphere.transform.position, Vector3.forward, rotateAmount);
             } 
 
            

@@ -30,10 +30,10 @@ public class rotateLeftFlipper : MonoBehaviour {
         // For testing purposes, I'm using the Z key instead of a dynamic rotation amount to trigger the flipper
 
         GameObject leftSphere = GameObject.Find("SphereLeft");
-        float rotateAmount = 500 * Time.deltaTime;
+        float rotateAmount = 1000 * Time.deltaTime;
 
         down = amountRotatedBy <= 0;
-
+        Debug.Log(rotateAmount);
         if ((Input.GetKey("z") || PinballSerial.left)) {
             // Rotate the flipper by the desired amounts
             // Do maths to reposition the flipper
