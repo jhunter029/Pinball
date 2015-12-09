@@ -11,53 +11,59 @@ public class rotateLeftFlipper : MonoBehaviour {
 	private int reset = 10; // Frames to wait before resetting flipper
 	private Transform pivot; // left pivot point
 	private bool down = true; // flag to see if the flipper is down
-
-	// Use this for initialization
-	void Start () {
+    float amountRotatedBy;
+    // Use this for initialization
+    void Start () {
 		// Default all values to the starting positions
 		startPos = transform.position;
 		startRot = transform.rotation;
 		startEuler = transform.eulerAngles;
 		currEuler = transform.eulerAngles;
-
+        amountRotatedBy = 0;
 		// Set reference to the pivot point
 		pivot = transform.Find("Left Pivot Point");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		// For testing purposes, I'm using the Z key instead of a dynamic rotation amount to trigger the flipper
-		if (PinballSerial.left && down) {
-			// Rotate the flipper by the desired amount
-			transform.Rotate(Vector3.forward * rotAmount);
-			// Do maths to reposition the flipper
+
+    // Update is called once per frame
+   
+    void Update () {
+        // For testing purposes, I'm using the Z key instead of a dynamic rotation amount to trigger the flipper
+
+        GameObject leftSphere = GameObject.Find("SphereLeft");
+        float rotateAmount = 500 * Time.deltaTime;
+
+        down = amountRotatedBy <= 0;
+
+        if ((Input.GetKey("z") || PinballSerial.left)) {
+            // Rotate the flipper by the desired amounts
+            // Do maths to reposition the flipper
 			// It rotates around the center, not the left end
-			float pos = Mathf.Abs(transform.position.x - pivot.position.x);
-			float diffY = Mathf.Abs(transform.position.y - pivot.position.y);
-			transform.position = new Vector3(transform.position.x - pos - Mathf.Abs(pos * Mathf.Cos (rotAmount * 3.1415926f / 180.0f)),
-			                                 transform.position.y + Mathf.Abs(pos * Mathf.Sin (rotAmount * 3.1415926f / 180.0f)),
-			                                 transform.position.z);
-			transform.Translate(Vector3.left * Mathf.Abs(pos - Mathf.Abs(pos * Mathf.Cos (rotAmount * 3.1415926f / 180.0f))));
-			transform.Translate(Vector3.up * Mathf.Abs(diffY -Mathf.Abs(pos * Mathf.Sin (rotAmount * 3.1415926f / 180.0f))));
-			// Mark that the flipper is up
-			down = false;
+		
+
+            if (amountRotatedBy < 75) { 
+                amountRotatedBy += rotateAmount;
+                transform.RotateAround(leftSphere.transform.position, Vector3.forward, rotateAmount);
+            }
+            // Mark that the flipper is up
+            down = false;
 			// Start the reset counter
 			reset = 10;
-		} else if (!down && PinballSerial.left) {
-			reset = 10;
-		} else if (reset == 0) {
-			//Reset angle and position
-			transform.position = startPos;
-			transform.rotation = startRot;
-			transform.eulerAngles = startEuler;
-			// Reset reset counter
-			reset = 10;
-			// Mark that the flipper has been reset
-			down = true;
-		} else {
-			// Decrement frame wait
-			reset--;
-		}
+		}  else if (!(Input.GetKey("z")|| PinballSerial.left)) {
+
+            if (amountRotatedBy > 0) {
+                amountRotatedBy -= rotateAmount;
+                transform.RotateAround(leftSphere.transform.position, Vector3.back, rotateAmount);
+            }
+            
+            //Reset angle and position
+            //transform.position = startPos;
+            //transform.rotation = startRot;
+            //transform.eulerAngles = startEuler;
+            // Reset reset counter
+            //reset = 10;
+            // Mark that the flipper has been reset
+            //down = true;
+        } 
 	}
 
 	// Detect Collisions with the Ball
